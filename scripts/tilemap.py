@@ -23,7 +23,7 @@ class Tilemap:
         self.tilemap = {}
         self.offgridTiles = []
 
-        for i in range(10):
+        for i in range(100):
             self.tilemap[str(3 + i) + ";10"] = {
                 "type": "grass",
                 "variant": 1,
@@ -45,16 +45,22 @@ class Tilemap:
                 tiles.append(self.tilemap[checkLoc])
         return tiles
 
-    def render(self, surface):
+    def render(self, surface, offset=(0, 0)):
 
         for tile in self.offgridTiles:
-            surface.blit(self.game.assets[tile["type"]][tile["variant"]], tile["pos"])
+            surface.blit(
+                self.game.assets[tile["type"]][tile["variant"]],
+                (tile["pos"][0] - offset[0].tile["pos"][1] - offset[1]),
+            )
 
         for location in self.tilemap:
             tile = self.tilemap[location]
             surface.blit(
                 self.game.assets[tile["type"]][tile["variant"]],
-                (tile["pos"][0] * self.tileSize, tile["pos"][1] * self.tileSize),
+                (
+                    tile["pos"][0] * self.tileSize - offset[0],
+                    tile["pos"][1] * self.tileSize - offset[1],
+                ),
             )
 
     def physicsRectsAround(self, pos):
