@@ -15,10 +15,25 @@ class Game:
         self.cloud.set_colorkey((0, 0, 0))
         self.cloud_pos = [160, 260]
         self.movement = [False, False]
+        self.collisionArea = pygame.Rect(50, 50, 300, 50)
 
     def run(self):
         while True:
             self.screen.fill((14, 219, 248))
+
+            img_r = pygame.Rect(
+                self.cloud_pos[0],
+                self.cloud_pos[1],
+                self.cloud.get_width(),
+                self.cloud.get_height(),
+            )
+
+            if img_r.colliderect(self.collisionArea):
+                pygame.draw.rect(self.screen, (0, 100, 255), self.collisionArea)
+            else:
+                pygame.draw.rect(self.screen, (0, 50, 155), self.collisionArea)
+
+            # cloud_r = pygame.Rect(*self.cloud_pos, *self.cloud.get_siz()  )
 
             self.cloud_pos[1] += (self.movement[1] - self.movement[0]) * 5
             self.screen.blit(self.cloud, self.cloud_pos)
