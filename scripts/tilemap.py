@@ -1,3 +1,21 @@
+import pygame
+
+
+NEIGHBOUR_OFFSETS = [
+    (-1, 0),
+    (-1, -1),
+    (0, -1),
+    (1, -1),
+    (1, 0),
+    (0, 0),
+    (-1, 1),
+    (0, 1),
+    (1, 1),
+]
+
+PHYSICS_TILE = {"grass", "stone"}
+
+
 class Tilemap:
     def __init__(self, game, tileSize=16):
         self.game = game
@@ -17,6 +35,16 @@ class Tilemap:
                 "pos": (10, 5 + i),
             }
 
+    def tilesAround(self, pos):
+        tiles = []
+        tileLoc = (int(pos[0] // self.tileSize), int(pos[1] // self.tileSize))
+
+        for offset in NEIGHBOUR_OFFSETS:
+            checkLoc = str(tileLoc[0] + offset[0]) + ";" + str(tileLoc[1] + offset[1])
+            if checkLoc in self.tilemap:
+                tiles.append(self.tilemap[checkLoc])
+        return tiles
+
     def render(self, surface):
 
         for tile in self.offgridTiles:
@@ -28,3 +56,17 @@ class Tilemap:
                 self.game.assets[tile["type"]][tile["variant"]],
                 (tile["pos"][0] * self.tileSize, tile["pos"][1] * self.tileSize),
             )
+
+    def physicsRectsAround(self, pos):
+        rects = []
+        for tile in self.tilesAround(pos):
+            if tile["type"] in PHYSICS_TILE:
+                rects.append(
+                    pygame.Rect(
+                        tile["pos"][0] * self.tileSize,
+                        tile["pos"][1] * self.tileSize,
+                        self.tileSize,
+                        self.tileSize,
+                    )
+                )
+        return rects
