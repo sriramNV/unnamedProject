@@ -23,7 +23,7 @@ class Tilemap:
         self.tilemap = {}
         self.offgridTiles = []
 
-        for i in range(100):
+        for i in range(10):
             self.tilemap[str(3 + i) + ";10"] = {
                 "type": "grass",
                 "variant": 1,
