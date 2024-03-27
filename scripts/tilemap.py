@@ -46,22 +46,40 @@ class Tilemap:
         return tiles
 
     def render(self, surface, offset=(0, 0)):
+        for x in range(
+            offset[0] // self.tileSize,
+            (offset[0] + surface.get_width()) // self.tileSize + 1,
+        ):
+            for y in range(
+                offset[1] // self.tileSize,
+                (offset[1] + surface.get_height()) // self.tileSize + 1,
+            ):
+                loc = str(x) + ";" + str(y)
+                if loc in self.tilemap:
+                    tile = self.tilemap[loc]
+                    surface.blit(
+                        self.game.assets[tile["type"]][tile["variant"]],
+                        (
+                            tile["pos"][0] * self.tileSize - offset[0],
+                            tile["pos"][1] * self.tileSize - offset[1],
+                        ),
+                    )
 
-        for tile in self.offgridTiles:
-            surface.blit(
-                self.game.assets[tile["type"]][tile["variant"]],
-                (tile["pos"][0] - offset[0].tile["pos"][1] - offset[1]),
-            )
+    # for tile in self.offgridTiles:
+    # surface.blit(
+    #     self.game.assets[tile["type"]][tile["variant"]],
+    #     (tile["pos"][0] - offset[0].tile["pos"][1] - offset[1]),
+    # )
 
-        for location in self.tilemap:
-            tile = self.tilemap[location]
-            surface.blit(
-                self.game.assets[tile["type"]][tile["variant"]],
-                (
-                    tile["pos"][0] * self.tileSize - offset[0],
-                    tile["pos"][1] * self.tileSize - offset[1],
-                ),
-            )
+    # for location in self.tilemap:
+    #     tile = self.tilemap[location]
+    #     surface.blit(
+    #         self.game.assets[tile["type"]][tile["variant"]],
+    #         (
+    #             tile["pos"][0] * self.tileSize - offset[0],
+    #             tile["pos"][1] * self.tileSize - offset[1],
+    #         ),
+    #     )
 
     def physicsRectsAround(self, pos):
         rects = []
