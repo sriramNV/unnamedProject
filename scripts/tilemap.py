@@ -150,8 +150,8 @@ class Tilemap:
             if (tile["type"], tile["variant"]) in id_pairs:
                 matches.append(tile.copy())
                 matches[-1]["pos"] = matches[-1]["pos"].copy()
-                matches[-1]["pos"][0] *= self.tile_size
-                matches[-1]["pos"][1] *= self.tile_size
+                matches[-1]["pos"][0] *= self.tileSize
+                matches[-1]["pos"][1] *= self.tileSize
                 if not keep:
                     del self.tilemap[loc]
 
