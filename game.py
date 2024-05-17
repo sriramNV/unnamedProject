@@ -40,7 +40,7 @@ class Game:
                 load_images("particles/leaf"), img_dur=20, loop=False
             ),
             "particle/particle": Animation(
-                load_images("particles/leaf"), img_dur=6, loop=False
+                load_images("particles/particle"), img_dur=6, loop=False
             ),
         }
 
