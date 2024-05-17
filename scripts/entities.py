@@ -126,9 +126,11 @@ class Player(PhysicsEntity):
             self.velocity[0] = abs(self.dashing) / self.dashing * 8
             if abs(self.dashing) == 51:
                 self.velocity[0] *= 0.1
+
             angle = random.random() * math.pi * 2
             speed = random.random() * 0.5 + 0.5
             pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]
+
             self.game.particles.append(
                 Particle(
                     self.game,
